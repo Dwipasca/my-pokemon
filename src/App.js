@@ -18,7 +18,7 @@ const App = () => {
     <ApolloProvider client={client}>
       <Routes>
         <Route path="/" element={<PokemonList />} />
-        <Route path="/pokemon-detail" element={<PokemonDetail />} />
+        <Route path="/:pokemonName/detail" element={<PokemonDetail />} />
         <Route path="/my-pokemon-list" element={<MyPokemonList />} />
       </Routes>
     </ApolloProvider>
