@@ -6,6 +6,15 @@ import { GET_POKEMON_LIST } from "../../lib/api";
 // components
 import Pokemon from "../../components/pokemon";
 
+// style
+import styled from "@emotion/styled";
+
+const Container = styled.div`
+  background-color: #e1e2e1;
+  width: 480px;
+  min-height: 100vh;
+`;
+
 const Index = () => {
   const [page, setPage] = useState(0);
   const [listPokemon, setListPokemon] = useState([]);
@@ -15,7 +24,7 @@ const Index = () => {
   });
 
   useEffect(() => {
-    if (loading === false && data.pokemons?.results) {
+    if (loading === false && data) {
       setListPokemon([...listPokemon, ...data.pokemons?.results]);
     }
   }, [data]);
@@ -27,23 +36,25 @@ const Index = () => {
   if (error) return "Error";
 
   return (
-    <div style={{ width: "480px", backgroundColor: "turquoise" }}>
+    <Container>
       <h1>Pokemon List</h1>
 
-      {loading
-        ? "Loading.."
-        : listPokemon.map((pokemon) => {
-            return (
-              <Pokemon
-                key={pokemon.name}
-                name={pokemon.name}
-                img={pokemon.image}
-              />
-            );
-          })}
+      {loading ? (
+        <p>Loading..</p>
+      ) : (
+        listPokemon.map((pokemon) => {
+          return (
+            <Pokemon
+              key={pokemon.name}
+              name={pokemon.name}
+              img={pokemon.image}
+            />
+          );
+        })
+      )}
 
       <button onClick={loadMore}>Load more</button>
-    </div>
+    </Container>
   );
 };
 
