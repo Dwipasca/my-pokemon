@@ -15,6 +15,7 @@
 - ReactJS (https://create-react-app.dev/docs/getting-started)
 - Apolo Client GraphQL (https://www.apollographql.com/docs/react/get-started/)
 - React Router Dom (https://reactrouter.com/docs/en/v6/getting-started/installation)
+- Emotion (https://emotion.sh/docs/introduction)
 - TBD
 
 ## How to use this project
