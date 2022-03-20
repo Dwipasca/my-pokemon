@@ -38,7 +38,7 @@ const Index = () => {
 
   return (
     <Container>
-      <h1>Detail Pokemon</h1>
+      <h1>Pokemon Detail</h1>
       <div>
         {loading ? <p>Loading...</p> : pokemon && <h2>{pokemon.name}</h2>}
 
