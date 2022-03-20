@@ -12,6 +12,41 @@ const Container = styled.div`
   background-color: #e1e2e1;
   width: 480px;
   min-height: 100vh;
+  text-align: center;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const MovesWrapper = styled.div`
+  display: flex;
+  overflow-x: scroll;
+`;
+
+const Badge = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin: 10px 5px;
+  min-width: 120px;
+  height: 40px;
+  background-color: azure;
+  font-size: small;
+`;
+
+const Button = styled.button`
+  padding: 10px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Index = () => {
@@ -31,24 +66,27 @@ const Index = () => {
     }
   }, [data]);
 
-  // if (loading) return "Loading..";
   if (error) return "Error";
 
   console.log(pokemon);
 
   return (
     <Container>
-      <h1>Pokemon Detail</h1>
-      <div>
-        {loading ? <p>Loading...</p> : pokemon && <h2>{pokemon.name}</h2>}
-
+      <Title>Pokemon Detail</Title>
+      <Header>
         {loading ? (
           <p>Loading...</p>
         ) : (
           pokemon && (
-            <img src={pokemon.sprites?.front_default} alt={pokemon.name} />
+            <img
+              src={pokemon.sprites?.front_default}
+              alt={pokemon.name}
+              style={{ width: "92px", height: "92px" }}
+            />
           )
         )}
+
+        {loading ? <p>Loading...</p> : pokemon && <h2>{pokemon.name}</h2>}
 
         {loading ? (
           <p>Loading...</p>
@@ -56,18 +94,24 @@ const Index = () => {
           pokemon &&
           pokemon.types?.map((type, idx) => <p key={idx}>{type.type?.name}</p>)
         )}
-      </div>
+      </Header>
       <div>
         <strong>Moves</strong>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          pokemon &&
-          pokemon.moves?.map((move, idx) => <p key={idx}>{move.move.name}</p>)
-        )}
+        <MovesWrapper>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            pokemon &&
+            pokemon.moves?.map((move, idx) => (
+              <Badge key={idx}>
+                <p>{move.move.name}</p>
+              </Badge>
+            ))
+          )}
+        </MovesWrapper>
       </div>
 
-      <button>Catch Pokemon</button>
+      <Button>Catch Pokemon</Button>
     </Container>
   );
 };
