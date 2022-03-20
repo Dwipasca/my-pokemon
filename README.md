@@ -18,7 +18,7 @@
 - Emotion (https://emotion.sh/docs/introduction)
 - TBD
 
-## How to use this project
+## How to setup project in local
 
 - clone this repo
 
@@ -38,13 +38,13 @@
     yarn | yarn install
 ```
 
-## How to run project
+## How to run project in local
 
 ```
     yarn start
 ```
 
-## How to run test
+## How to run test in local
 
 ```
     yarn test
