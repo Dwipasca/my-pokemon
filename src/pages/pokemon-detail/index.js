@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 // lib
 import { GET_POKEMON } from "../../lib/api";
+import { PokemonContext } from "../../context";
 
 // style
 import styled from "@emotion/styled";
@@ -49,10 +50,19 @@ const Button = styled.button`
   }
 `;
 
+const Modal = styled.div`
+  width: 200px;
+  height: 200px;
+  background-color: cyan;
+`;
+
 const Index = () => {
   let params = useParams();
+  const { myPokemonList, catchPokemon } = useContext(PokemonContext);
 
+  const [open, setOpen] = useState(false);
   const [pokemon, setPokemon] = useState(null);
+  const [pokemonName, setPokemonName] = useState("");
 
   const { loading, error, data } = useQuery(GET_POKEMON, {
     variables: {
@@ -68,7 +78,35 @@ const Index = () => {
 
   if (error) return "Error";
 
-  console.log(pokemon);
+  const handleCatchPokemon = () => {
+    const random = Math.random();
+    const successRate = 0.5;
+
+    if (random > successRate) {
+      setOpen(true);
+    } else {
+      alert("failed to catch pokemon");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  const handleSubmitModal = () => {
+    if (pokemonName) {
+      const isPokemonNameExist = myPokemonList.find(
+        (pokemon) => pokemon.nickname === pokemonName
+      );
+
+      if (!isPokemonNameExist) {
+        catchPokemon(pokemon, pokemonName);
+        alert("Successful catching pokemon");
+      } else {
+        alert("Nickname already used");
+      }
+    }
+  };
 
   return (
     <Container>
@@ -111,7 +149,20 @@ const Index = () => {
         </MovesWrapper>
       </div>
 
-      <Button>Catch Pokemon</Button>
+      {open > 0 && (
+        <Modal>
+          <input
+            type="text"
+            name="pokemonName"
+            id="pokemonName"
+            onChange={(e) => setPokemonName(e.target.value)}
+          />
+          <button onClick={handleCloseModal}>Close</button>
+          <button onClick={handleSubmitModal}>Save</button>
+        </Modal>
+      )}
+
+      <Button onClick={handleCatchPokemon}>Catch Pokemon</Button>
     </Container>
   );
 };
