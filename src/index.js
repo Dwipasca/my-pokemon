@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
+import { PokemonProvider } from "./context";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
@@ -14,9 +15,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <BrowserRouter>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <PokemonProvider>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </PokemonProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );
